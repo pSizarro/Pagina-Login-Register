@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+    <title>Log-in SYSTEM</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+
+        .header {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: none;
+            background-color: #FC466B;
+            position: fixed;
+            height: 60px!important;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .main {
+            margin: 0 auto;
+            display: block;
+            height: 100%;
+            margin-top: 60px;
+        }
+        .mainInner{
+            display: table;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        .mainInner div{
+            display:table-cell;
+            vertical-align: middle;
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 1.25px;
+        }
+        #sidebarMenu {
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            margin-top: 60px;
+            transform: translateX(-250px);
+            transition: transform 250ms ease-in-out;
+            background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
+        }
+        .sidebarMenuInner{
+            margin:0;
+            padding:0;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .sidebarMenuInner li{
+            list-style: none;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .sidebarMenuInner li span{
+            display: block;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.50);
+        }
+        .sidebarMenuInner li a{
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        input[type="checkbox"]:checked ~ #sidebarMenu {
+            transform: translateX(0);
+        }
+
+        input[type=checkbox] {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            display: none;
+        }
+        .sidebarIconToggle {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: absolute;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            top: 22px;
+            left: 15px;
+            height: 22px;
+            width: 22px;
+        }
+        .spinner {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+        }
+        .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+        .diagonal.part-1 {
+            position: relative;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            float: left;
+        }
+        .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            opacity: 0;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(135deg);
+            margin-top: 8px;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(-135deg);
+            margin-top: -9px;
+        }
+
+        html {
+            height: 100%;
+            }
+        body {
+            margin:0;
+            padding:0;
+            font-family: sans-serif;
+            background: linear-gradient(#141e30, #243b55);
+            }
+
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 131, 69, 0.5);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+            }
+
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fc7703;
+            text-align: center;
+            text-decoration: underline;
+            }
+
+        .login-box .user-box {
+            position: relative;
+            }
+
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+            }
+        .login-box .user-box label {
+            position: absolute;
+            top:0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+            }
+
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 12px;
+            }
+
+        .login-box form button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03e9;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px
+            }
+
+        .login-box button:hover {
+            background: #03e9f4;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                        0 0 25px #03e9f4,
+                        0 0 50px #03e9f4,
+                        0 0 100px #03e9f4;
+            }
+
+        .login-box button span {
+            position: absolute;
+            display: block;
+            }
+
+        .login-box button span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+            }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%,100% {
+                left: 100%;
+            }
+            }
+
+        .login-box button span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+            }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%,100% {
+                top: 100%;
+            }
+            }
+
+        .login-box button span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+            }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%,100% {
+                right: 100%;
+            }
+            }
+
+        .login-box a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+            }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,100% {
+                bottom: 100%;
+            }
+            }
+        .flip-table{
+            border:solid;
+            background-color:rgba(58, 146, 218, 0.726);
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+ 
+    </style>
+
+</head>
+<body>
+    
+    <div class="header"></div>
+  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+  <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li>Que miras amigo <span>(╯°□°）╯︵ ┻━┻</span></li>
+    </ul>
+  </div>
+ 
+  <div class="login-box" >
+    <h2>Bienvenido <%= name %> </h2>
+    <marquee direction="down" width="230" height="140" behavior="alternate" class="flip-table">
+        <marquee behavior="alternate" style="color: white;">
+          (╯°□°）╯︵ ┻━┻)
+        </marquee>
+
+    </marquee>
+    
+    <form name="RegForm" action="/logout?_method=DELETE" method="POST">      
+           
+    <button href="#" style="left: 5%; box-shadow: 0 15px 25px rgba(0,0,0,.6);">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+           Login
+    </button>
+    <button href="#" style="left: 15% ; box-shadow: 0 15px 25px rgba(0,0,0,.6);">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+           Register
+    </button>
+    <button href="#" style="left: 30% ; box-shadow: 0 15px 25px rgba(0,0,0,.6);">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+           Log Out
+    </button>
+    </form>
+           
+    
+
+  </div>
+  <br><br><br><br><br>
+
+
+
+  <script>
+/*-------------------------------------------------------------------------------------------------------*/
+/*
+    <p style="text-align: center;">Hola <%= name %></p>
+
+      function kieres() {
+        document.getElementById("but").innerText='Te dije que no tocaras maraco ql'
+        const x = document.getElementById("kieres");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }        
+    } 
+
+    const username = document.forms['RegForm']['user-box'];
+    const password = document.forms['RegForm']['user-box'];
+    const email = document.forms['RegForm']['user-box'];
+
+    function validar(){
+        
+    if (username.value == ""){
+        alert("Ingresa el nombre")
+        username.focus();
+        return false;
+    }
+    if(password.value == ""){
+        alert("Ingrese contraseña")
+        password.focus();
+        return false;
+    }
+    return (true);
+}
+    function validateEmail() {
+         var emailID = document.RegForm.email.value;
+         atpos = emailID.indexOf("@");
+         dotpos = emailID.lastIndexOf(".");
+         
+         if (atpos < 1 || ( dotpos - atpos < 2 )) {
+            alert("Please enter correct email ID")
+            document.RegForm.email.focus() ;
+            return false;
+         }
+         return( true );
+      }
+
+      function request(){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+// Los estados del xhr van del 0 al 4/// 0: Ausente - 1: Abierto - 2:Recibido - 3:Cargando - 4:Cargado y listo
+                    document.getElementById("abr").innerHTML = this.responseText;
+                }
+                if(xhr.status == 400){
+                    console.log('Archivo no encontrado')
+                }
+            }
+            xhr.open("GET", "mirame.txt",true);
+            xhr.send()
+        };
+*/
+
+/*-------------------------------------------------------------------------------------------------------*/
+  </script>
+
+
+</body>
+</html>

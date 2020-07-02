@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   
+    <title>Log-in SYSTEM</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Varela+Round');
+        @import url('https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap');
+
+        .header {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: none;
+            background-color: #FC466B;
+            position: fixed;
+            height: 60px!important;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .main {
+            margin: 0 auto;
+            display: block;
+            height: 100%;
+            margin-top: 60px;
+        }
+        .mainInner{
+            display: table;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        .mainInner div{
+            display:table-cell;
+            vertical-align: middle;
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 1.25px;
+        }
+        #sidebarMenu {
+            height: 100%;
+            position: fixed;
+            left: 0;
+            width: 250px;
+            margin-top: 60px;
+            transform: translateX(-250px);
+            transition: transform 250ms ease-in-out;
+            background: linear-gradient(180deg, #FC466B 0%, #3F5EFB 100%);
+        }
+        .sidebarMenuInner{
+            margin:0;
+            padding:0;
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .sidebarMenuInner li{
+            list-style: none;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 20px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+        .sidebarMenuInner li span{
+            display: block;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.50);
+        }
+        .sidebarMenuInner li a{
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        input[type="checkbox"]:checked ~ #sidebarMenu {
+            transform: translateX(0);
+        }
+
+        input[type=checkbox] {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            display: none;
+        }
+        .sidebarIconToggle {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: absolute;
+            z-index: 99;
+            height: 100%;
+            width: 100%;
+            top: 22px;
+            left: 15px;
+            height: 22px;
+            width: 22px;
+        }
+        .spinner {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+        }
+        .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+        .diagonal.part-1 {
+            position: relative;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            float: left;
+        }
+        .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            float: left;
+            margin-top: 3px;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            opacity: 0;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(135deg);
+            margin-top: 8px;
+        }
+        input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+            transition: all 0.3s;
+            box-sizing: border-box;
+            transform: rotate(-135deg);
+            margin-top: -9px;
+        }
+
+        html {
+            height: 100%;
+            }
+        body {
+            margin:0;
+            padding:0;
+            font-family: sans-serif;
+            background: linear-gradient(#141e30, #243b55);
+            }
+
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 131, 69, 0.5);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+            }
+
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+            }
+
+        .login-box .user-box {
+            position: relative;
+            }
+
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+            }
+        .login-box .user-box label {
+            position: absolute;
+            top:0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+            }
+
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 12px;
+            }
+
+        .login-box form button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03e9;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px
+            }
+            
+
+        .login-box button:hover {
+            background: #03e9f4;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                        0 0 25px #03e9f4,
+                        0 0 50px #03e9f4,
+                        0 0 100px #03e9f4;
+            }
+
+        .login-box button span {
+            position: absolute;
+            display: block;
+            }
+
+        .login-box button span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+            }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%,100% {
+                left: 100%;
+            }
+            }
+        
+
+        .login-box button span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+            }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%,100% {
+                top: 100%;
+            }
+            }
+
+        .login-box button span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+            }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%,100% {
+                right: 100%;
+            }
+            }
+
+        .login-box a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+            }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,100% {
+                bottom: 100%;
+            }
+            }
+        a{
+            color: white;
+            font-family: 'MuseoModerno', cursive;
+        }
+
+    </style>
+
+</head>
+<body>
+
+  <img src="https://images7.memedroid.com/images/UPLOADED946/5e6d4b749c81c.jpeg" alt="kieres" id="kieres" style=" display: none;">
+
+  
+  <div class="login-box">
+    <h2 style="text-decoration: underline;">Login</h2>
+    <% if (messages.error) { %>
+        <%= messages.error %>
+      <% } %>
+    <form name="RegForm" action="/login" method="POST">
+      <div class="user-box">
+        <input type="email"  id="email" name="email" required>
+        <label>Email</label>
+      </div>
+      <div class="user-box">
+        <input type="password" id="password" name="password" required>
+        <label>Contraseña</label>
+      </div>
+      <button href="#" type="submit">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Enviar
+      </button>
+      <a href="/register">Register</a>
+    </form>
+
+</div>
+
+   
+</body>
+</html>
+
